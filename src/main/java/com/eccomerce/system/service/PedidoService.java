@@ -5,7 +5,9 @@ import com.eccomerce.system.mapper.PedidoMapper;
 import com.eccomerce.system.model.EstadoPedido;
 import com.eccomerce.system.model.Pedido;
 import com.eccomerce.system.repository.PedidoRepository;
+import com.eccomerce.system.serialization.PedidoBackupService;
 import com.eccomerce.system.socket.PedidoNotificationService;
+import com.eccomerce.system.thread.PedidoExecutorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final PedidoMapper pedidoMapper;
     private final PedidoNotificationService notificationService;
+    private final PedidoExecutorService pedidoExecutorService;
+    private final PedidoBackupService backupService;
 
     public List<PedidoDTO> listarPedidos() {
 
@@ -49,6 +53,14 @@ public class PedidoService {
 
         Pedido pedidoGuardado =
                 pedidoRepository.save(pedido);
+
+        backupService.backup(
+                pedidoGuardado
+        );
+
+        pedidoExecutorService.procesarPedido(
+                pedidoGuardado
+        );
 
         notificationService.nuevoPedido(
                 pedidoGuardado.getId(),
