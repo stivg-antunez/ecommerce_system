@@ -43,11 +43,23 @@ public class SoapConfig {
     public XsdSchema pedidoSchema() {
 
         return new SimpleXsdSchema(
-                new ClassPathResource(
-                        "pedidos.xsd"
-                )
+                new ClassPathResource("pedidos.xsd")
         );
 
+    }
+
+    @Bean
+    public XsdSchema productoSchema() {
+        return new SimpleXsdSchema(
+                new ClassPathResource("productos.xsd")
+        );
+    }
+
+    @Bean
+    public XsdSchema clienteSchema() {
+        return new SimpleXsdSchema(
+                new ClassPathResource("clientes.xsd")
+        );
     }
 
     @Bean(name = "pedidos")
@@ -73,6 +85,52 @@ public class SoapConfig {
         definition.setSchema(
                 pedidoSchema
         );
+
+        return definition;
+    }
+
+    @Bean(name = "productos")
+    public DefaultWsdl11Definition productoWsdl(
+            XsdSchema productoSchema
+    ) {
+
+        DefaultWsdl11Definition definition =
+                new DefaultWsdl11Definition();
+
+        definition.setPortTypeName(
+                "ProductoPort"
+        );
+
+        definition.setLocationUri("/ws");
+
+        definition.setTargetNamespace(
+                "http://eccomerce.com/producto"
+        );
+
+        definition.setSchema(productoSchema);
+
+        return definition;
+    }
+
+    @Bean(name = "clientes")
+    public DefaultWsdl11Definition clienteWsdl(
+            XsdSchema clienteSchema
+    ) {
+
+        DefaultWsdl11Definition definition =
+                new DefaultWsdl11Definition();
+
+        definition.setPortTypeName(
+                "ClientePort"
+        );
+
+        definition.setLocationUri("/ws");
+
+        definition.setTargetNamespace(
+                "http://eccomerce.com/cliente"
+        );
+
+        definition.setSchema(clienteSchema);
 
         return definition;
     }
