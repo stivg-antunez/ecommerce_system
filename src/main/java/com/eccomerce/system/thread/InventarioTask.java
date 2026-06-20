@@ -14,22 +14,48 @@ public class InventarioTask implements Runnable {
     @Override
     public void run() {
 
-        Producto producto =
-                productoRepository.findById(
-                        productoId
-                ).orElseThrow();
+        try {
 
-        producto.setStock(
-                producto.getStock() - cantidad
-        );
+            Producto producto =
+                    productoRepository.findById(
+                            productoId
+                    ).orElseThrow(
+                            () -> new RuntimeException(
+                                    "Producto no encontrado"
+                            )
+                    );
 
-        productoRepository.save(
-                producto
-        );
+            Integer stockAnterior =
+                    producto.getStock();
 
-        System.out.println(
-                "Inventario actualizado"
-        );
+            producto.setStock(
+                    stockAnterior - cantidad
+            );
+
+            productoRepository.save(
+                    producto
+            );
+
+            System.out.println(
+                    "Inventario actualizado -> Producto: "
+                            + productoId
+                            + " | Stock anterior: "
+                            + stockAnterior
+                            + " | Nuevo stock: "
+                            + producto.getStock()
+                            + " | Hilo: "
+                            + Thread.currentThread().getName()
+            );
+
+        } catch (Exception e) {
+
+            System.err.println(
+                    "Error actualizando inventario"
+            );
+
+            e.printStackTrace();
+
+        }
 
     }
 

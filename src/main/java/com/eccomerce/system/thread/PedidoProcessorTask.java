@@ -19,8 +19,10 @@ public class PedidoProcessorTask implements Runnable {
         try {
 
             System.out.println(
-                    "Procesando pedido " +
-                            pedido.getId()
+                    "Procesando pedido "
+                            + pedido.getId()
+                            + " en "
+                            + Thread.currentThread().getName()
             );
 
             Thread.sleep(5000);
@@ -38,7 +40,19 @@ public class PedidoProcessorTask implements Runnable {
                     pedido.getEstado().name()
             );
 
+            System.out.println(
+                    "Pedido "
+                            + pedido.getId()
+                            + " actualizado a "
+                            + pedido.getEstado()
+            );
+
         } catch (Exception e) {
+
+            System.err.println(
+                    "Error procesando pedido "
+                            + pedido.getId()
+            );
 
             e.printStackTrace();
 

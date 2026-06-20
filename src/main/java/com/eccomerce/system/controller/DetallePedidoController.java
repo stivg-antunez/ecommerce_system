@@ -4,6 +4,7 @@ import com.eccomerce.system.dto.DetallePedidoDTO;
 import com.eccomerce.system.service.DetallePedidoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +16,13 @@ public class DetallePedidoController {
 
     private final DetallePedidoService detallePedidoService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<DetallePedidoDTO> listarDetalles() {
         return detallePedidoService.listarDetalles();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public DetallePedidoDTO obtenerDetalle(@PathVariable Long id) {
         return detallePedidoService.obtenerDetalle(id);
     }

@@ -1,7 +1,9 @@
 package com.eccomerce.system.thread;
 
+import com.eccomerce.system.model.DetallePedido;
 import com.eccomerce.system.model.Pedido;
 import com.eccomerce.system.repository.PedidoRepository;
+import com.eccomerce.system.repository.ProductoRepository;
 import com.eccomerce.system.socket.PedidoNotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.concurrent.Executors;
 public class PedidoExecutorService {
 
     private final PedidoRepository pedidoRepository;
+    private final ProductoRepository productoRepository;
     private final PedidoNotificationService notificationService;
 
     private final ExecutorService executor =
@@ -32,6 +35,25 @@ public class PedidoExecutorService {
                 )
 
         );
+
+        if (pedido.getDetalles() != null) {
+
+            for (DetallePedido detalle :
+                    pedido.getDetalles()) {
+
+                executor.submit(
+
+                        new InventarioTask(
+                                productoRepository,
+                                detalle.getProducto().getId(),
+                                detalle.getCantidad()
+                        )
+
+                );
+
+            }
+
+        }
 
     }
 

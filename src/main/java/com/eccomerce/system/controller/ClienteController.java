@@ -4,6 +4,7 @@ import com.eccomerce.system.dto.ClienteDTO;
 import com.eccomerce.system.service.ClienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +16,13 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ClienteDTO> listarClientes() {
         return clienteService.listarClientes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ClienteDTO obtenerCliente(@PathVariable Long id) {
         return clienteService.obtenerCliente(id);
     }
