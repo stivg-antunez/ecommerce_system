@@ -6,16 +6,77 @@
         xmlns:tns="http://eccomerce.com/cliente"
         elementFormDefault="qualified">
 
+    <!-- ========================= -->
+    <!-- OBTENER CLIENTE -->
+    <!-- ========================= -->
+
     <xs:element name="obtenerClienteRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="id"
-                            type="xs:long"/>
+                <xs:element name="id" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="obtenerClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="id" type="xs:long"/>
+
+                <xs:element name="nombre"
+                            type="xs:string"/>
+
+                <xs:element name="email"
+                            type="xs:string"/>
+
+                <xs:element name="telefono"
+                            type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ========================= -->
+    <!-- CREAR CLIENTE -->
+    <!-- ========================= -->
+
+    <xs:element name="crearClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="nombre"
+                            type="xs:string"/>
+
+                <xs:element name="email"
+                            type="xs:string"/>
+
+                <xs:element name="telefono"
+                            type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="crearClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="id"
+                            type="xs:long"/>
+
+                <xs:element name="mensaje"
+                            type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ========================= -->
+    <!-- ACTUALIZAR CLIENTE -->
+    <!-- ========================= -->
+
+    <xs:element name="actualizarClienteRequest">
         <xs:complexType>
             <xs:sequence>
 
@@ -29,6 +90,43 @@
                             type="xs:string"/>
 
                 <xs:element name="telefono"
+                            type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="actualizarClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="mensaje"
+                            type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ========================= -->
+    <!-- ELIMINAR CLIENTE -->
+    <!-- ========================= -->
+
+    <xs:element name="eliminarClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="id"
+                            type="xs:long"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="eliminarClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="mensaje"
                             type="xs:string"/>
 
             </xs:sequence>

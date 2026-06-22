@@ -1,12 +1,11 @@
 package com.eccomerce.system.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Producto implements Serializable {
+public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,17 +24,7 @@ public class Producto implements Serializable {
     @NotBlank
     private String nombre;
 
-    @NotBlank
-    private String descripcion;
-
-    @Positive
-    private Double precio;
-
-    @Min(0)
-    private Integer stock;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos;
 
 }

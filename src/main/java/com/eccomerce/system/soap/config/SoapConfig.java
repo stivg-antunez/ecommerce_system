@@ -62,6 +62,15 @@ public class SoapConfig {
         );
     }
 
+    @Bean
+    public XsdSchema categoriaSchema() {
+
+        return new SimpleXsdSchema(
+                new ClassPathResource("categorias.xsd")
+        );
+
+    }
+
     @Bean(name = "pedidos")
     public DefaultWsdl11Definition defaultWsdl11Definition(
             XsdSchema pedidoSchema
@@ -110,6 +119,34 @@ public class SoapConfig {
         definition.setSchema(productoSchema);
 
         return definition;
+    }
+
+    @Bean(name = "categorias")
+    public DefaultWsdl11Definition categoriaWsdl(
+            XsdSchema categoriaSchema
+    ) {
+
+        DefaultWsdl11Definition definition =
+                new DefaultWsdl11Definition();
+
+        definition.setPortTypeName(
+                "CategoriaPort"
+        );
+
+        definition.setLocationUri(
+                "/ws"
+        );
+
+        definition.setTargetNamespace(
+                "http://eccomerce.com/categoria"
+        );
+
+        definition.setSchema(
+                categoriaSchema
+        );
+
+        return definition;
+
     }
 
     @Bean(name = "clientes")
